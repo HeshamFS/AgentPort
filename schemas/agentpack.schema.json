@@ -1,0 +1,236 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agentport.dev/schemas/agentpack.schema.json",
+  "title": "AgentPack",
+  "type": "object",
+  "required": ["schemaVersion", "createdAt", "source", "instructions", "mcpServers", "sourceEvidence", "manualActions"],
+  "properties": {
+    "schemaVersion": { "const": "1.1.0" },
+    "createdAt": { "type": "string", "format": "date-time" },
+    "source": {
+      "type": "object",
+      "required": ["tool", "scope", "platform"],
+      "properties": {
+        "tool": { "enum": ["claude", "codex", "gemini", "mixed"] },
+        "scope": { "enum": ["global", "project", "local", "managed", "all"] },
+        "projectPath": { "type": "string" },
+        "cwdPath": { "type": "string" },
+        "homePath": { "type": "string" },
+        "platform": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "instructions": { "type": "array", "items": { "$ref": "#/$defs/instruction" } },
+    "mcpServers": { "type": "array", "items": { "$ref": "#/$defs/mcpServer" } },
+    "skills": { "type": "array", "items": { "$ref": "#/$defs/skill" }, "default": [] },
+    "agents": { "type": "array", "items": { "$ref": "#/$defs/agent" }, "default": [] },
+    "commands": { "type": "array", "items": { "$ref": "#/$defs/command" }, "default": [] },
+    "hooks": { "type": "array", "items": { "$ref": "#/$defs/hook" }, "default": [] },
+    "permissions": { "type": "array", "items": { "$ref": "#/$defs/permissions" }, "default": [] },
+    "memorySummaries": { "type": "array", "items": { "$ref": "#/$defs/memorySummary" }, "default": [] },
+    "plugins": { "type": "array", "items": { "$ref": "#/$defs/plugin" }, "default": [] },
+    "sourceEvidence": { "type": "array", "items": { "$ref": "#/$defs/sourceEvidence" } },
+    "manualActions": { "type": "array", "items": { "$ref": "#/$defs/manualAction" } }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "portability": { "enum": ["exact", "translated", "lossy", "manual", "unsupported", "skipped"] },
+    "scope": {
+      "type": "object",
+      "required": ["kind", "sharedWith", "appliesTo", "precedence", "toolNativeName"],
+      "properties": {
+        "kind": { "enum": ["managed", "global", "project", "local", "nested", "plugin", "cloud", "session", "unknown"] },
+        "sharedWith": { "enum": ["organization", "all-projects", "team", "current-user", "current-session", "unknown"] },
+        "appliesTo": { "enum": ["all-users", "current-user", "all-projects", "current-project", "path-subtree", "runtime", "unknown"] },
+        "precedence": { "type": "integer" },
+        "toolNativeName": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "baseItem": {
+      "type": "object",
+      "required": ["id", "sourceTool", "scope", "portability", "evidenceIds"],
+      "properties": {
+        "id": { "type": "string" },
+        "sourceTool": { "enum": ["claude", "codex", "gemini", "mixed"] },
+        "scope": { "$ref": "#/$defs/scope" },
+        "sourcePath": { "type": "string" },
+        "portability": { "$ref": "#/$defs/portability" },
+        "evidenceIds": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "instruction": {
+      "allOf": [
+        { "$ref": "#/$defs/baseItem" },
+        {
+          "type": "object",
+          "required": ["canonicalName", "content"],
+          "properties": {
+            "canonicalName": { "type": "string" },
+            "content": { "type": "string" },
+            "activation": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "mcpServer": {
+      "allOf": [
+        { "$ref": "#/$defs/baseItem" },
+        {
+          "type": "object",
+          "required": ["name", "transport"],
+          "properties": {
+            "name": { "type": "string" },
+            "transport": { "enum": ["stdio", "streamable-http", "sse", "unknown"] },
+            "command": { "type": "string" },
+            "args": { "type": "array", "items": { "type": "string" } },
+            "url": { "type": "string" },
+            "serverUrl": { "type": "string" },
+            "env": { "type": "object", "additionalProperties": { "type": "string" } },
+            "headers": { "type": "object", "additionalProperties": { "type": "string" } },
+            "disabled": { "type": "boolean" },
+            "autoApprove": { "type": "array", "items": { "type": "string" } },
+            "raw": { "type": "object" }
+          }
+        }
+      ]
+    },
+    "skill": {
+      "allOf": [
+        { "$ref": "#/$defs/baseItem" },
+        {
+          "type": "object",
+          "required": ["name", "files"],
+          "properties": {
+            "name": { "type": "string" },
+            "description": { "type": "string" },
+            "files": { "type": "array", "items": { "$ref": "#/$defs/fileContent" } }
+          }
+        }
+      ]
+    },
+    "agent": {
+      "allOf": [
+        { "$ref": "#/$defs/baseItem" },
+        {
+          "type": "object",
+          "required": ["name", "content"],
+          "properties": {
+            "name": { "type": "string" },
+            "description": { "type": "string" },
+            "content": { "type": "string" },
+            "frontmatter": { "type": "object" }
+          }
+        }
+      ]
+    },
+    "command": {
+      "allOf": [
+        { "$ref": "#/$defs/baseItem" },
+        {
+          "type": "object",
+          "required": ["name", "content"],
+          "properties": {
+            "name": { "type": "string" },
+            "content": { "type": "string" },
+            "trigger": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "hook": {
+      "allOf": [
+        { "$ref": "#/$defs/baseItem" },
+        {
+          "type": "object",
+          "required": ["event", "handlerType", "raw"],
+          "properties": {
+            "event": { "type": "string" },
+            "matcher": { "type": "string" },
+            "handlerType": { "type": "string" },
+            "command": { "type": "string" },
+            "url": { "type": "string" },
+            "raw": {}
+          }
+        }
+      ]
+    },
+    "permissions": {
+      "allOf": [
+        { "$ref": "#/$defs/baseItem" },
+        {
+          "type": "object",
+          "properties": {
+            "allow": { "type": "array", "items": { "type": "string" } },
+            "ask": { "type": "array", "items": { "type": "string" } },
+            "deny": { "type": "array", "items": { "type": "string" } },
+            "raw": {}
+          }
+        }
+      ]
+    },
+    "memorySummary": {
+      "allOf": [
+        { "$ref": "#/$defs/baseItem" },
+        {
+          "type": "object",
+          "required": ["strategy"],
+          "properties": {
+            "strategy": { "enum": ["summarize-only", "skip-raw", "manual"] },
+            "content": { "type": "string" }
+          }
+        }
+      ]
+    },
+    "plugin": {
+      "allOf": [
+        { "$ref": "#/$defs/baseItem" },
+        {
+          "type": "object",
+          "required": ["name"],
+          "properties": {
+            "name": { "type": "string" },
+            "source": { "type": "string" },
+            "raw": {}
+          }
+        }
+      ]
+    },
+    "sourceEvidence": {
+      "type": "object",
+      "required": ["id", "tool", "kind", "scope", "path", "resolvedBy"],
+      "properties": {
+        "id": { "type": "string" },
+        "tool": { "enum": ["claude", "codex", "gemini", "mixed"] },
+        "kind": { "type": "string" },
+        "scope": { "$ref": "#/$defs/scope" },
+        "path": { "type": "string" },
+        "resolvedBy": { "type": "string" },
+        "note": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "manualAction": {
+      "type": "object",
+      "required": ["id", "reason", "portability"],
+      "properties": {
+        "id": { "type": "string" },
+        "reason": { "type": "string" },
+        "portability": { "$ref": "#/$defs/portability" },
+        "itemIds": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "fileContent": {
+      "type": "object",
+      "required": ["relativePath", "content"],
+      "properties": {
+        "relativePath": { "type": "string" },
+        "content": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

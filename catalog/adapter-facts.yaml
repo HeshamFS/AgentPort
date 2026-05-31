@@ -1,0 +1,139 @@
+schemaVersion: 1.0.0
+sourceOfTruthDate: 2026-05-31
+policy:
+  sourcePreference:
+    - official documentation
+    - product-maintained repositories
+    - community sources only when official docs are missing or ambiguous
+  defaultMigrationMode: plan-first-safe
+tools:
+  claude:
+    status: implemented
+    displayName: Claude Code
+    facts:
+      - kind: settings
+        locations:
+          managed:
+            macos: "/Library/Application Support/ClaudeCode/managed-settings.json"
+            linux: "/etc/claude-code/managed-settings.json"
+            windows: "C:\\Program Files\\ClaudeCode\\managed-settings.json"
+          global: "~/.claude/settings.json"
+          project: ".claude/settings.json"
+          local: ".claude/settings.local.json"
+        precedence: "enterprise managed, command line, local project, shared project, user"
+        citation: "https://code.claude.com/docs/en/settings"
+      - kind: mcp
+        locations:
+          global: "~/.claude.json"
+          project: ".mcp.json"
+          local: "~/.claude.json projects[projectPath].mcpServers"
+        scopes: ["local", "project", "user"]
+        citation: "https://code.claude.com/docs/en/mcp"
+      - kind: instructions
+        locations:
+          global: "~/.claude/CLAUDE.md"
+          project: "CLAUDE.md or .claude/CLAUDE.md"
+          local: "CLAUDE.local.md"
+          nested: ".claude/rules/*.md"
+        citation: "https://code.claude.com/docs/en/settings"
+      - kind: hooks
+        notes: "Claude Code supports lifecycle hooks with decision control; cross-tool migrations require manual review."
+        citation: "https://code.claude.com/docs/en/hooks"
+  codex:
+    status: implemented
+    displayName: Codex
+    facts:
+      - kind: config
+        locations:
+          global: "${CODEX_HOME}/config.toml when CODEX_HOME is set, otherwise ~/.codex/config.toml"
+          project: ".codex/config.toml"
+        precedence: "project config overrides user config for supported keys; several provider/auth keys are global-only"
+        citation: "https://developers.openai.com/codex/config-reference"
+      - kind: instructions
+        locations:
+          global: "~/.codex/AGENTS.md and ~/.codex/AGENTS.override.md"
+          project: "AGENTS.md, AGENTS.override.md, and configured fallback files from project root to cwd"
+          nested: "AGENTS.md in active subdirectories"
+        citation: "https://developers.openai.com/codex/guides/agents-md"
+      - kind: skills
+        locations:
+          user: "~/.codex/skills"
+          project: ".agents/skills"
+        citation: "https://developers.openai.com/codex/skills"
+  gemini:
+    status: implemented
+    displayName: Gemini CLI
+    facts:
+      - kind: settings
+        locations:
+          global: "~/.gemini/settings.json"
+          project: ".gemini/settings.json"
+        precedence: "workspace/project settings override user settings"
+        citation: "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/configuration.md"
+      - kind: instructions
+        locations:
+          global: "~/.gemini/GEMINI.md and configured user context.fileName values"
+          project: "GEMINI.md and configured workspace context.fileName values from project root to cwd and subdirectories"
+        citation: "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/configuration.md"
+      - kind: commands
+        locations:
+          global: "~/.gemini/commands/*.toml"
+          project: ".gemini/commands/*.toml"
+        citation: "https://github.com/google-gemini/gemini-cli/blob/main/docs/reference/commands.md"
+  cursor:
+    status: research-only
+    citation: "https://docs.cursor.com/context/rules"
+  windsurf:
+    status: research-only
+    citation: "https://docs.windsurf.com/windsurf/cascade/memories"
+  antigravity:
+    status: research-only
+    citation: "https://antigravity.google/docs/ide-rules"
+  kiro:
+    status: research-only
+    citation: "https://kiro.dev/docs/steering/"
+  amp:
+    status: research-only
+    citation: "https://ampcode.com/manual"
+  aider:
+    status: research-only
+    citation: "https://aider.chat/docs/usage/conventions.html"
+  opencode:
+    status: research-only
+    citation: "https://opencode.ai/docs/config"
+  goose:
+    status: research-only
+    citation: "https://block.github.io/goose/docs/getting-started/using-extensions"
+  zed:
+    status: research-only
+    citation: "https://zed.dev/docs/ai/rules"
+  junie:
+    status: research-only
+    citation: "https://www.jetbrains.com/help/ai-assistant/junie-agent.html"
+  github-copilot-cli:
+    status: research-only
+    citation: "https://docs.github.com/en/copilot/reference/copilot-cli-reference/cli-config-dir-reference"
+  amazon-q-developer:
+    status: research-only
+    citation: "https://docs.aws.amazon.com/amazonq/latest/qdeveloper-ug/qdev-mcp.html"
+  continue:
+    status: research-only
+    citation: "https://docs.continue.dev/reference"
+  cline:
+    status: research-only
+    citation: "https://docs.cline.bot/getting-started/config"
+  roo-code:
+    status: research-only
+    citation: "https://roocodeinc.github.io/Roo-Code/features/custom-instructions"
+  trae:
+    status: research-only
+    citation: "https://traeide.com/news/6"
+  augment:
+    status: research-only
+    citation: "https://docs.augmentcode.com/"
+  replit-agent:
+    status: research-only
+    citation: "https://docs.replit.com/build/build-an-agent"
+  devin:
+    status: research-only
+    citation: "https://agents.md/"

@@ -1,0 +1,47 @@
+{
+  "name": "@agentport/cli",
+  "version": "0.1.0",
+  "description": "AgentPort CLI: a safe migration planner and AgentPack compiler for AI coding-agent environments.",
+  "type": "module",
+  "bin": {
+    "agentport": "./dist/src/cli.js",
+    "agentmigrate": "./dist/src/cli.js"
+  },
+  "files": [
+    "dist/src",
+    "schemas",
+    "catalog",
+    "docs",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "node scripts/run-tests.mjs",
+    "check": "npm run build",
+    "prepack": "npm run build"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "keywords": [
+    "agents",
+    "ai-coding",
+    "codex",
+    "claude-code",
+    "gemini-cli",
+    "mcp",
+    "migration",
+    "agentpack"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.21",
+    "typescript": "^5.8.3"
+  },
+  "license": "MIT"
+}

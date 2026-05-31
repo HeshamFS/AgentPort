@@ -1,0 +1,25 @@
+name: Research fact update
+description: Update the compatibility catalog with sourced facts.
+title: "[Research]: "
+labels: ["research", "docs"]
+body:
+  - type: input
+    id: tool
+    attributes:
+      label: Tool
+    validations:
+      required: true
+  - type: textarea
+    id: fact
+    attributes:
+      label: Fact
+      description: What should change in the compatibility catalog?
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source
+      description: Prefer official docs or product-maintained repositories.
+    validations:
+      required: true

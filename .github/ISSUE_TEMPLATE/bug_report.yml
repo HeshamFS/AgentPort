@@ -1,0 +1,46 @@
+name: Bug report
+description: Report incorrect scanning, planning, or apply behavior.
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+  - type: dropdown
+    id: tool
+    attributes:
+      label: Source or target tool
+      options:
+        - Claude Code
+        - Codex
+        - Gemini CLI
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: command
+    attributes:
+      label: Command
+      description: Paste the command you ran. Remove secrets first.
+      render: shell
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Include OS, Node version, and sanitized fixture snippets if useful.

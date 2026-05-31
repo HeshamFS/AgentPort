@@ -1,0 +1,36 @@
+name: Adapter request
+description: Request support for another coding-agent CLI or IDE.
+title: "[Adapter]: "
+labels: ["adapter", "research"]
+body:
+  - type: input
+    id: tool
+    attributes:
+      label: Tool name
+      placeholder: Cursor, Windsurf, Antigravity, Kiro, Amp, etc.
+    validations:
+      required: true
+  - type: textarea
+    id: docs
+    attributes:
+      label: Official docs or source links
+      description: Link to configuration, MCP, rules, hooks, memory, or commands docs.
+    validations:
+      required: true
+  - type: checkboxes
+    id: surfaces
+    attributes:
+      label: Known surfaces
+      options:
+        - label: Instructions/rules
+        - label: MCP servers
+        - label: Commands/workflows
+        - label: Skills/agents
+        - label: Hooks/automation
+        - label: Permissions
+        - label: Memory/conversations
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+      description: Add sanitized examples if you have them.
