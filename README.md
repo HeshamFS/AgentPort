@@ -15,6 +15,18 @@ The goal is not to copy random folders. The goal is a standard, inspectable way 
 
 ## Recommended First Run
 
+Without installing:
+
+```bash
+npx @heshamfsalama/agentport doctor --project .
+```
+
+Or install globally:
+
+```bash
+npm install -g @heshamfsalama/agentport
+```
+
 ```bash
 agentport doctor --project .
 agentport scan --from auto --scope all --project . --cwd . --out agentpack.json

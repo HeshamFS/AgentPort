@@ -4,6 +4,7 @@
 
 Initial GitHub-ready version.
 
+- Prepared npm package as `@heshamfsalama/agentport`.
 - Added AgentPort CLI with `scan`, `plan`, `apply`, and `doctor`.
 - Added AgentPack schema `1.1.0`.
 - Added Claude Code, Codex, and Gemini CLI V1 adapters.

@@ -1,5 +1,5 @@
 {
-  "name": "@agentport/cli",
+  "name": "@heshamfsalama/agentport",
   "version": "0.1.0",
   "description": "AgentPort CLI: a safe migration planner and AgentPack compiler for AI coding-agent environments.",
   "type": "module",
@@ -36,6 +36,14 @@
     "migration",
     "agentpack"
   ],
+  "homepage": "https://github.com/HeshamFS/AgentPort#readme",
+  "bugs": {
+    "url": "https://github.com/HeshamFS/AgentPort/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HeshamFS/AgentPort.git"
+  },
   "publishConfig": {
     "access": "public"
   },

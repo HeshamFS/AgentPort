@@ -4,6 +4,26 @@
 
 Safe migration planner and portable AgentPack standard for AI coding-agent environments.
 
+## npm Package
+
+Initial package name:
+
+```text
+@heshamfsalama/agentport
+```
+
+Install:
+
+```bash
+npm install -g @heshamfsalama/agentport
+```
+
+Run without installing:
+
+```bash
+npx @heshamfsalama/agentport doctor --project .
+```
+
 ## Short Social Description
 
 AgentPort scans Claude Code, Codex, and Gemini CLI configuration, normalizes it into an AgentPack, and creates a safe migration plan before writing anything.

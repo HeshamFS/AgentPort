@@ -3,6 +3,16 @@
 AgentPort is designed around review before mutation. The normal flow is:
 
 ```bash
+npx @heshamfsalama/agentport doctor --project .
+```
+
+Or install it:
+
+```bash
+npm install -g @heshamfsalama/agentport
+```
+
+```bash
 agentport doctor --project .
 agentport scan --from auto --scope all --project . --cwd . --out agentpack.json
 agentport plan --pack agentpack.json --to codex --target-scope same --out migration.plan.json
