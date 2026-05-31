@@ -2,6 +2,8 @@ import os from "node:os";
 import path from "node:path";
 import type { ToolId } from "./types.js";
 
+type PathApi = typeof path.posix;
+
 export interface PathResolverOptions {
   platform?: NodeJS.Platform;
   homePath?: string;
@@ -25,7 +27,7 @@ export class PathResolver {
   readonly projectPath: string;
   readonly cwdPath: string;
   readonly env: Record<string, string | undefined>;
-  private readonly pathApi: path.PlatformPath;
+  private readonly pathApi: PathApi;
 
   constructor(options: PathResolverOptions = {}) {
     this.platform = options.platform ?? os.platform();
@@ -80,7 +82,7 @@ export class PathResolver {
     return this.pathApi.resolve(input);
   }
 
-  pathModule(): path.PlatformPath {
+  pathModule(): PathApi {
     return this.pathApi;
   }
 
