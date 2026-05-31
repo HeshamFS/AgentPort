@@ -6,6 +6,16 @@ It scans tools like Claude Code, Codex, and Gemini CLI, normalizes their configu
 
 The goal is not to copy random folders. The goal is a standard, inspectable way to move agent instructions, MCP servers, skills, commands, permissions, and automation between coding agents without silently leaking secrets or changing behavior.
 
+## npm Package
+
+AgentPort is published on npm:
+
+[npmjs.com/package/@heshamfsalama/agentport](https://www.npmjs.com/package/@heshamfsalama/agentport)
+
+```bash
+npx @heshamfsalama/agentport help
+```
+
 ## Product Model
 
 - **AgentPort**: the CLI and migration engine.

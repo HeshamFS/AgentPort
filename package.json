@@ -4,8 +4,8 @@
   "description": "AgentPort CLI: a safe migration planner and AgentPack compiler for AI coding-agent environments.",
   "type": "module",
   "bin": {
-    "agentport": "./dist/src/cli.js",
-    "agentmigrate": "./dist/src/cli.js"
+    "agentport": "dist/src/cli.js",
+    "agentmigrate": "dist/src/cli.js"
   },
   "files": [
     "dist/src",

@@ -2,6 +2,12 @@
 
 AgentPort is designed around review before mutation. The normal flow is:
 
+Package page:
+
+```text
+https://www.npmjs.com/package/@heshamfsalama/agentport
+```
+
 ```bash
 npx @heshamfsalama/agentport doctor --project .
 ```
